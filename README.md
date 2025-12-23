@@ -239,7 +239,9 @@ pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
 到项目根目录
 
 ```bash
-git clone https://huggingface.co/jingyaogong/MiniMind2 # or https://www.modelscope.cn/models/gongjy/MiniMind2
+# git clone https://huggingface.co/jingyaogong/MiniMind2 # or 
+git clone https://www.modelscope.cn/models/gongjy/MiniMind2
+
 ```
 
 ### （可选）命令行问答
@@ -253,7 +255,7 @@ python eval_llm.py --load_from ./MiniMind2
 
 ```bash
 # 可能需要`python>=3.10` 安装 `pip install streamlit`
-# cd scripts
+cd scripts
 streamlit run web_demo.py
 ```
 
@@ -264,6 +266,12 @@ streamlit run web_demo.py
 ollama run jingyaogong/minimind2
 # vllm
 vllm serve ./MiniMind2/ --served-model-name "minimind"
+
+vllm serve ./MiniMind2 \
+  --model-impl transformers \
+  --served-model-name "minimind" \
+  --gpu-memory-utilization 0.7
+
 ```
 
 ## Ⅱ 从0开始自己训练
@@ -292,6 +300,10 @@ print(torch.cuda.is_available())
 从下文提供的[数据集下载链接](https://www.modelscope.cn/datasets/gongjy/minimind_dataset/files)
 下载需要的数据文件（创建`./dataset`目录）并放到`./dataset`下
 
+git clone https://www.modelscope.cn/datasets/gongjy/minimind_dataset/
+
+wget https://www.modelscope.cn/datasets/gongjy/minimind_dataset/resolve/master/pretrain_hq.jsonl
+wget https://www.modelscope.cn/datasets/gongjy/minimind_dataset/resolve/master/sft_mini_512.jsonl
 <details style="color:rgb(128,128,128)">
 <summary>注：数据集须知</summary>
 
